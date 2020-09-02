@@ -1,0 +1,4 @@
+*.deb
+build.sh
+pkg_root
+rpi3bp.cfg
