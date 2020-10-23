@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  splunk:
+    image: splunk/splunk:7.2.10
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=password
+      - SPLUNK_HOME=/opt/splunk
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./etc:/opt/splunk/etc
