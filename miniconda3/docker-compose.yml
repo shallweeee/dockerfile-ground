@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  mincon3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mincon3:nb
+    ports:
+      - '8888:8888'
