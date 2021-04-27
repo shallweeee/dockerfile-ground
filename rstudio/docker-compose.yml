@@ -1,0 +1,11 @@
+version: "3.0"
+services:
+  rstudio:
+    image: rocker/rstudio
+    ports:
+      - "8787:8787"
+    environment:
+      - DISABLE_AUTH=true # 안전한 곳에서만 사용할 것
+      #- PASSWORD=yourpasswordhere
+    volumes:
+      - .:/home/rstudio
