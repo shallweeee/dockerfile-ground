@@ -1,0 +1,21 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0.21
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    ports:
+      - 3306:3306
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql:/var/lib/mysql
+    restart: always
+  web:
+    image: tomcat:8.5.40-jre8
+    ports:
+      - 8080:8080
+    volumes:
+      - ./tomcat:/usr/local/tomcat
+    restart: always
