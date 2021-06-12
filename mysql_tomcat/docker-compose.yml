@@ -14,13 +14,13 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_0900_ai_ci
     restart: always
-  web:
-    image: tomcat
-    container_name: web
-    depend_on:
-      - db
-    ports:
-      - 8080:8080
-    volumes:
-      - ./tomcat:/usr/local/tomcat
-    restart: always
+#  web:
+#    image: tomcat
+#    container_name: web
+#    depend_on:
+#      - db
+#    ports:
+#      - 8080:8080
+#    volumes:
+#      - ./tomcat:/usr/local/tomcat
+#    restart: always
