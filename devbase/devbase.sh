@@ -8,7 +8,7 @@ build() {
 }
 
 run() {
-  docker run -it --rm -h $TAG -v $HOME:$HOME $TAG:$VER
+  docker run -it --rm -h $TAG -v $HOME:$HOME -w $PWD $TAG:$VER
 }
 
 usage() {
