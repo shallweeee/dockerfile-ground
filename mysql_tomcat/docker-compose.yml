@@ -1,26 +1,40 @@
 version: "3"
 services:
   db:
-    image: mysql
-    container_name: db
+    image: mysql:8.0.26
+    container_name: db-${COMPOSE_PROJECT_NAME}
     environment:
       - MYSQL_ROOT_PASSWORD=password
-    ports:
-      - 3306:3306
-      - 33060:33060
+      - HOSTUID=${UID}
+      - HOSTGID=${GID}
+    entrypoint: /custom/entrypoint-mysql.sh
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./custom:/custom:ro
+      - ./db:/var/lib/mysql
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_0900_ai_ci
+    ports:
+      - 3306:3306
     restart: always
-#  web:
-#    image: tomcat
-#    container_name: web
-#    depend_on:
-#      - db
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - ./tomcat:/usr/local/tomcat
-#    restart: always
+
+  web:
+    image: ${COMPOSE_PROJECT_NAME}/tomcat:8.5.40-jre8-alpine
+    container_name: web-${COMPOSE_PROJECT_NAME}
+    build:
+      context: ./custom
+      dockerfile: Dockerfile.tomcat
+      args:
+        image: tomcat
+        version: :8.5.40-jre8-alpine
+    environment:
+      HOSTUID: ${UID}
+      HOSTGID: ${GID}
+    entrypoint: /custom/entrypoint-tomcat.sh
+    volumes:
+      - ./custom:/custom:ro
+      - ./web_logs:/usr/local/tomcat/logs
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
