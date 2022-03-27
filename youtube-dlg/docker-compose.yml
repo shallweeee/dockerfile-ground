@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  app:
+    image: youtubedlg:0.4.1
+    build:
+      context: .
+      args:
+        UID: ${UID}
+        GID: ${GID}
+        USER: ${USER}
+    environment:
+      - DISPLAY=unix${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - $HOME:/home/${USER}
