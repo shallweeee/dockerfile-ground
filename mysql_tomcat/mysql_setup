@@ -1,0 +1,16 @@
+#! /bin/bash
+
+. <(grep '^DB' .env)
+
+MYSQL='docker-compose exec -T -- db mysql -uroot --password=password --default-character-set=utf8mb4'
+
+cat << EOF | $MYSQL
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$DBPSWD';
+ALTER USER 'root'@'%' IDENTIFIED BY '$DBPSWD';
+CREATE USER '$DBUSER'@'localhost' IDENTIFIED BY '$DBPSWD';
+GRANT ALL ON *.* TO '$DBUSER'@'localhost';
+CREATE USER '$DBUSER'@'%' IDENTIFIED BY '$DBPSWD';
+GRANT ALL ON *.* TO '$DBUSER'@'%';
+FLUSH PRIVILEGES;
+EOF
+[ $? -eq 0 ] || echo 'failed'

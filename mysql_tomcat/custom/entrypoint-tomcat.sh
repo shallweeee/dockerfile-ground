@@ -1,4 +1,4 @@
-#! /bin/bash -x
+#! /bin/bash
 
 _is_host_uid() {
 	local ugid="$(id -u tomcat):$(id -g tomcat)"
@@ -17,4 +17,6 @@ if ! _is_host_uid; then
 	_change_uid
 fi
 
-exec /usr/local/bin/docker-entrypoint.sh "$@"
+[ -z "$1" ] && set -- catalina.sh run "$@"
+[ $1 = catalina.sh ] && exec gosu tomcat "$@"
+exec "$@"

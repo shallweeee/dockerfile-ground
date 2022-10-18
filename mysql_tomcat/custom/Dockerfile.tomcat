@@ -30,6 +30,5 @@ RUN set -eux; \
 	gosu nobody true
 
 RUN apk add shadow && groupadd -r tomcat && useradd  -r -g tomcat tomcat
-RUN echo -e '#! /bin/bash\nset -e\n[ -z "$1" ] && set -- catalina.sh run "@"; [ $1 = catalina.sh ] && exec gosu tomcat "$@"\nexec "$@"' > /usr/local/bin/docker-entrypoint.sh; \
-    chmod +x /usr/local/bin/docker-entrypoint.sh
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY entrypoint-tomcat.sh /usr/local/bin/
+ENTRYPOINT ["entrypoint-tomcat.sh"]

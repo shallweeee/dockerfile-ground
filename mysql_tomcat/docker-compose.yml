@@ -1,7 +1,7 @@
 version: "3"
 services:
   db:
-    image: mysql:8.0.26
+    image: mysql:8.0.30
     container_name: db-${COMPOSE_PROJECT_NAME}
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -30,10 +30,10 @@ services:
     environment:
       HOSTUID: ${UID}
       HOSTGID: ${GID}
-    entrypoint: /custom/entrypoint-tomcat.sh
     volumes:
       - ./custom:/custom:ro
       - ./web_logs:/usr/local/tomcat/logs
+#      - ./ROOT:/usr/local/tomcat/webapps/ROOT
     ports:
       - 8080:8080
     depends_on:
