@@ -1,0 +1,3 @@
+#! /bin/bash
+
+docker-compose logs | grep 'Generated \(Username\|Password\)\|https' | sed '/https/s;//.*:;//localhost:;'
